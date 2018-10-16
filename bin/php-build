@@ -609,9 +609,13 @@ function configure_package() {
 
             [ -e "$(brew --prefix bison)" ] && export PATH="$(brew --prefix bison)/bin:$PATH"
 
-            if [ -e "$(brew --prefix openssl)" ]; then
+            # use the linked version of openssl
+            if [ "$(brew unlink --dry-run openssl 2>/dev/null | wc -l)" -gt 1 ]; then
                 configure_option -R "--with-openssl"
                 configure_option -R "--with-openssl-dir" "$(brew --prefix openssl)"
+            elif [ "$(brew unlink --dry-run openssl@1.1 2>/dev/null| wc -l)" -gt 1 ]; then
+                configure_option -R "--with-openssl"
+                configure_option -R "--with-openssl-dir" "$(brew --prefix openssl@1.1)"
             fi
 
             [ -e "$(brew --prefix bzip2)" ]    && configure_option -R "--with-bz2"           "$(brew --prefix bzip2)"
