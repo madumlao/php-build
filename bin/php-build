@@ -640,9 +640,10 @@ function configure_package() {
         # in `/usr/X11/lib` instead of `/usr/lib`.
         configure_option -R "--with-png-dir" "/usr/X11"
 
-        # This currently builds PHP without the `gettext`
-        # extensions, as I've currently not got it to work on my machine.
+        # This currently builds PHP without the extensions below
+        # as I've currently not got it to work on my machine.
         configure_option -D "--with-gettext"
+        configure_option -D "--with-tidy"
 
         # Override libraries with homebrew versions
         if [ -n "$(which brew)" ]; then
