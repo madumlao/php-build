@@ -674,6 +674,7 @@ function configure_package() {
             [ -e "$(brew --prefix gettext)" ]  && configure_option -R "--with-gettext"       "$(brew --prefix gettext)"
             [ -e "$(brew --prefix gmp)" ]      && configure_option -R "--with-gmp"           "$(brew --prefix gmp)"
             [ -e "$(brew --prefix jpeg)" ]     && configure_option -R "--with-jpeg-dir"      "$(brew --prefix jpeg)"
+            [ -e "$(brew --prefix libiconv)" ] && configure_option -R "--with-iconv"         "$(brew --prefix libiconv)"
             [ -e "$(brew --prefix libpng)" ]   && configure_option -R "--with-png-dir"       "$(brew --prefix libpng)"
             [ -e "$(brew --prefix libxml2)" ]  && configure_option -R "--with-libxml-dir"    "$(brew --prefix libxml2)"
             [ -e "$(brew --prefix libzip)" ]   && configure_option -R "--with-libzip"        "$(brew --prefix libzip)"
