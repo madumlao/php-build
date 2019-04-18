@@ -645,6 +645,19 @@ function configure_package() {
         configure_option -D "--with-gettext"
         configure_option -D "--with-tidy"
 
+	# force CPATH to include system paths
+        export CPATH="/usr/include:$CPATH"
+        export LIBRARY_PATH="/usr/lib:$LIBRARY_PATH"
+        export LD_LIBRARY_PATH="/usr/lib:$LD_LIBRARY_PATH"
+
+	# force CPATH to include xcode path
+	if type xcrun >/dev/null 2>&1; then
+		XCPATH=$(xcrun --show-sdk-path)
+		export CPATH="$XCPATH/usr/include:$CPATH"
+		export LIBRARY_PATH="$XCPATH/usr/lib:$LIBRARY_PATH"
+		export LD_LIBRARY_PATH="$XCPATH/usr/lib:$LD_LIBRARY_PATH"
+	fi
+
         # Override libraries with homebrew versions
         if [ -n "$(which brew)" ]; then
             export CPATH="$(brew --prefix)/include:$CPATH"
