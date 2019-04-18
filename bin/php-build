@@ -654,10 +654,17 @@ function configure_package() {
 
             # use the linked version of openssl
             if [ "$(brew unlink --dry-run openssl 2>/dev/null | wc -l)" -gt 1 ]; then
-                configure_option -R "--with-openssl"
+                configure_option -R "--with-openssl" "$(brew --prefix openssl)"
                 configure_option -R "--with-openssl-dir" "$(brew --prefix openssl)"
             elif [ "$(brew unlink --dry-run openssl@1.1 2>/dev/null| wc -l)" -gt 1 ]; then
-                configure_option -R "--with-openssl"
+                configure_option -R "--with-openssl" "$(brew --prefix openssl@1.1)"
+                configure_option -R "--with-openssl-dir" "$(brew --prefix openssl@1.1)"
+            # none linked, use the first of the following installed by brew
+            elif [ -e "$(brew --prefix openssl)" ]; then
+                configure_option -R "--with-openssl" "$(brew --prefix openssl)"
+                configure_option -R "--with-openssl-dir" "$(brew --prefix openssl)"
+            elif [ -e "$(brew --prefix openssl@1.1)" ]; then
+                configure_option -R "--with-openssl" "$(brew --prefix openssl@1.1)"
                 configure_option -R "--with-openssl-dir" "$(brew --prefix openssl@1.1)"
             fi
 
